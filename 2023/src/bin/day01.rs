@@ -31,7 +31,7 @@ fn part2(input: String) -> String {
 }
 
 fn main() {
-    let input: String = include_str!("../input/01").to_string();
+    let input: String = include_str!("../../input/01").to_string();
     println!("PART 1: {}", part1(input.clone()));
     println!("PART 2: {}", part2(input.clone()));
 }
