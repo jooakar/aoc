@@ -19,16 +19,9 @@ pub fn find_num(chars: Vec<char>, mut col: usize) -> Option<u32> {
 
 
 // Finds all (positive) numbers in the string
-pub fn nums(str: &str) -> Vec<u32> {
-    let mut res: Vec<u32> = Vec::new();
-    let mut curr = 0;
-    for c in str.chars() {
-        match c.to_digit(10) {
-            Some(n) => { curr *= 10; curr += n; }
-            None => { if curr > 0 { res.push(curr); }; curr = 0; }
-        }
-    }
-    if curr > 0 { res.push(curr); }
-    res
+pub fn nums<T: std::str::FromStr>(str: &str) -> Vec<T> {
+    str.split_ascii_whitespace()
+        .flat_map(|s| s.parse())
+        .collect()
 }
 
