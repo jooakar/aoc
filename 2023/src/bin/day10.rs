@@ -3,7 +3,7 @@ use std::collections::VecDeque;
 use itertools::Itertools;
 
 // Testing how structs work
-#[derive(Clone)]
+#[derive(Copy, Clone)]
 struct Coord {
     x: usize,
     y: usize,
@@ -13,18 +13,6 @@ struct Coord {
 impl PartialEq for Coord {
     fn eq(&self, other: &Self) -> bool {
         self.x == other.x && self.y == other.y
-    }
-}
-
-impl std::fmt::Display for Coord {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {}) = {}", self.x, self.y, self.val)
-    }
-}
-
-impl std::fmt::Debug for Coord {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({}, {}) = {}", self.x, self.y, self.val)
     }
 }
 
@@ -65,14 +53,14 @@ fn part1(input: String) -> String {
         .collect();
     let (rows, cols) = (map.len(), map[0].len());
     let s = find_s(&map);
-    let mut visited = vec![s.clone()];
+    let mut visited = vec![s];
     let mut queue = VecDeque::<Coord>::from([s]);
     while !queue.is_empty() {
         let c = queue.pop_front().unwrap();
-        let n: Vec<Coord> = neighbors(c.clone(), &map, rows, cols)
+        let n: Vec<Coord> = neighbors(c, &map, rows, cols)
             .into_iter()
             .filter(|n| !visited.contains(n))
-            .filter(|n| neighbors(n.clone(), &map, rows, cols).contains(&c))
+            .filter(|&n| neighbors(n, &map, rows, cols).contains(&c))
             .collect();
         visited.extend(n.clone());
         queue.extend(n);
@@ -87,13 +75,13 @@ fn part2(input: String) -> String {
         .collect();
     let (rows, cols) = (map.len(), map[0].len());
     let s = find_s(&map);
-    let mut path = vec![s.clone()];
-    let mut queue = Vec::<Coord>::from([s.clone()]);
+    let mut path = vec![s];
+    let mut queue = Vec::<Coord>::from([s]);
     while let Some(c) = queue.pop() {
-        let n: Vec<Coord> = neighbors(c.clone(), &map, rows, cols)
+        let n: Vec<Coord> = neighbors(c, &map, rows, cols)
             .into_iter()
             .filter(|n| !path.contains(n))
-            .filter(|n| neighbors(n.clone(), &map, rows, cols).contains(&c))
+            .filter(|&n| neighbors(n, &map, rows, cols).contains(&c))
             .collect();
         path.extend(n.clone());
         queue.extend(n);
