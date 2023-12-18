@@ -9,10 +9,14 @@ fn part2(input: String) -> impl Display {
 }
 
 fn main() {
-    let example: String = include_str!("../../input/DAYNUM.ex").to_string();
-    let input: String = include_str!("../../input/DAYNUM").to_string();
-    println!("EXAMPLE 1: {}", part1(example.clone()));
-    println!("PART 1: {}", part1(input.clone()));
-    println!("EXAMPLE 2: {}", part2(example));
-    println!("PART 2: {}", part2(input));
+    let arg: String = std::env::args().nth(1).unwrap_or("".to_string());
+    if arg == "ex" {
+        let example: String = include_str!("../../input/DAYNUM.ex").to_string();
+        println!("EXAMPLE 1: {}", part1(example.clone()));
+        println!("EXAMPLE 2: {}", part1(example));
+    } else {
+        let input: String = include_str!("../../input/DAYNUM").to_string();
+        println!("PART 1: {}", solution(input.clone()));
+        println!("PART 2: {}", solution(input));
+    }
 }
