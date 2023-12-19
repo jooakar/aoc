@@ -15,10 +15,10 @@ fn main() {
     if arg == "ex" {
         let example: String = include_str!("../../input/DAYNUM.ex").to_string();
         println!("EXAMPLE 1: {}", part1(example.clone()));
-        println!("EXAMPLE 2: {}", part1(example));
+        println!("EXAMPLE 2: {}", part2(example));
     } else {
         let input: String = include_str!("../../input/DAYNUM").to_string();
         println!("PART 1: {}", part1(input.clone()));
-        println!("PART 2: {}", part1(input));
+        println!("PART 2: {}", part2(input));
     }
 }
