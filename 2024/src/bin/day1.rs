@@ -2,7 +2,7 @@ use std::{collections::HashMap, fmt::Display};
 
 use itertools::Itertools;
 
-fn part1(input: String) -> impl Display {
+fn part1(input: &str) -> impl Display {
     let (mut left, mut right): (Vec<u32>, Vec<u32>) = input
         .lines()
         .filter(|line| !line.is_empty())
@@ -21,7 +21,7 @@ fn part1(input: String) -> impl Display {
         .sum::<u32>()
 }
 
-fn part2(input: String) -> impl Display {
+fn part2(input: &str) -> impl Display {
     let mut left: HashMap<u32, u32> = HashMap::new();
     let mut right: HashMap<u32, u32> = HashMap::new();
     input
@@ -44,12 +44,12 @@ fn part2(input: String) -> impl Display {
 fn main() {
     let arg: String = std::env::args().nth(1).unwrap_or("".to_string());
     if arg == "ex" {
-        let example: String = include_str!("../../input/1.ex").to_string();
-        println!("EXAMPLE 1: {}", part1(example.clone()));
+        let example: &str = include_str!("../../input/1.ex");
+        println!("EXAMPLE 1: {}", part1(example));
         println!("EXAMPLE 2: {}", part2(example));
     } else {
-        let input: String = include_str!("../../input/1").to_string();
-        println!("PART 1: {}", part1(input.clone()));
+        let input: &str = include_str!("../../input/1");
+        println!("PART 1: {}", part1(input));
         println!("PART 2: {}", part2(input));
     }
 }
