@@ -31,6 +31,20 @@ impl<T> Grid<T> {
     }
 }
 
+impl<T: PartialEq> Grid<T> {
+    pub fn find_point(&self, item: T) -> Option<Point> {
+        for x in 0..self.width {
+            for y in 0..self.height {
+                let p = Point::new(x, y);
+                if self[p] == item {
+                    return Some(p);
+                }
+            }
+        }
+        None
+    }
+}
+
 impl<T> Index<Point> for Grid<T> {
     type Output = T;
 

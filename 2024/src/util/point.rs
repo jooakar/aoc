@@ -1,10 +1,10 @@
 use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
 
 pub const ORIGIN: Point = Point::new(0, 0);
-pub const UP: Point = Point::new(0, 1);
-pub const DOWN: Point = Point::new(0, -1);
-pub const LEFT: Point = Point::new(1, 0);
-pub const RIGHT: Point = Point::new(-1, 0);
+pub const UP: Point = Point::new(0, -1);
+pub const DOWN: Point = Point::new(0, 1);
+pub const LEFT: Point = Point::new(-1, 0);
+pub const RIGHT: Point = Point::new(1, 0);
 pub const ORTHOGONAL: [Point; 4] = [UP, RIGHT, DOWN, LEFT];
 pub const DIAGONAL: [Point; 8] = [
     UP,
@@ -65,10 +65,4 @@ impl SubAssign for Point {
         self.x -= rhs.x;
         self.y -= rhs.y;
     }
-}
-
-pub fn nums<T: std::str::FromStr>(str: &str) -> Vec<T> {
-    str.split_ascii_whitespace()
-        .flat_map(|s| s.parse())
-        .collect()
 }
