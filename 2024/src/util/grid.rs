@@ -1,5 +1,6 @@
 use crate::util::point::*;
 
+use core::str;
 use std::ops::{Index, IndexMut};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -21,6 +22,17 @@ impl Grid<u8> {
             height: height as i32,
             bytes,
         }
+    }
+
+    pub fn print(&self) {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let point = Point::new(x, y);
+                print!("{}", self[point] as char);
+            }
+            println!();
+        }
+        println!();
     }
 }
 

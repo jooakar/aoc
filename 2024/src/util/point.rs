@@ -17,7 +17,7 @@ pub const DIAGONAL: [Point; 8] = [
     Point::new(-1, 1),
 ];
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -56,7 +56,7 @@ impl Mul<i32> for Point {
 impl Sub for Point {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self::Output {
-        Point::new(self.x - rhs.x, self.y + rhs.y)
+        Point::new(self.x - rhs.x, self.y - rhs.y)
     }
 }
 
