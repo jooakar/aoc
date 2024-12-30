@@ -35,11 +35,6 @@ fn part1(input: &str) -> impl Display {
     res
 }
 
-struct Blank {
-    size: usize,
-    filled: Vec<(usize, usize)>,
-}
-
 fn part2(input: &str) -> impl Display {
     let (mut files, mut blanks): (Vec<_>, Vec<_>) = input
         .chars()
@@ -47,36 +42,29 @@ fn part2(input: &str) -> impl Display {
         .enumerate()
         .partition_map(|(i, n)| match i % 2 {
             0 => Either::Left((n, true)),
-            1 => Either::Right(Blank {
-                size: n,
-                filled: vec![],
-            }),
+            1 => Either::Right(n),
             _ => unreachable!(),
         });
-    let mut blocks: Vec<Option<usize>> = Vec::with_capacity(
-        files.iter().map(|b| b.0).sum::<usize>() + blanks.iter().map(|b| b.size).sum::<usize>(),
-    );
+    let mut blocks: Vec<Option<usize>> =
+        Vec::with_capacity(files.iter().map(|b| b.0).sum::<usize>() + blanks.iter().sum::<usize>());
     let mut i = 0;
     while i < files.len() {
         for _ in 0..files[i].0 {
             blocks.push(if files[i].1 { Some(i) } else { None });
         }
         for j in (i + 1..files.len()).rev() {
-            if blanks[i].size <= 0 {
+            if blanks[i] <= 0 {
                 break;
             }
-            if files[j].1 && files[j].0 <= blanks[i].size {
-                blanks[i].size -= files[j].0;
-                blanks[i].filled.push((j, files[j].0));
+            if files[j].1 && files[j].0 <= blanks[i] {
+                blanks[i] -= files[j].0;
+                for _ in 0..files[j].0 {
+                    blocks.push(Some(j));
+                }
                 files[j].1 = false;
             }
         }
-        for (id, count) in blanks[i].filled.iter() {
-            for _ in 0..*count {
-                blocks.push(Some(*id));
-            }
-        }
-        for _ in 0..(blanks[i].size) {
+        for _ in 0..(blanks[i]) {
             blocks.push(None);
         }
         i += 1;
