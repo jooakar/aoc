@@ -30,21 +30,23 @@ fn part2(input: &str) -> impl Display {
         .map(|s| nums::<u64>(s).into_iter().collect_tuple().unwrap())
         .for_each(|(a, b)| {
             for i in a..=b {
-                // very bad but it works
-                let s = i.to_string();
-                for j in 1..(s.len()) {
-                    if s.len() % j != 0 {
-                        continue;
-                    }
-                    let start = &s[0..j];
-                    if s.as_bytes()
-                        .chunks(j)
-                        .map(|chunk| std::str::from_utf8(chunk).unwrap())
-                        .all(|c| c == start)
-                    {
-                        score += i;
-                        break;
-                    }
+                let len = i.ilog10() + 1;
+                if (1..=(len / 2))
+                    .filter(|j| len % j == 0)
+                    .map(|j| 10_u64.pow(j))
+                    .any(|p| {
+                        let mut j = i;
+                        let base = j % p;
+                        while j > 0 {
+                            if j % p != base {
+                                return false;
+                            }
+                            j /= p;
+                        }
+                        true
+                    })
+                {
+                    score += i;
                 }
             }
         });
