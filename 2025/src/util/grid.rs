@@ -38,6 +38,15 @@ impl Grid<u8> {
 
 impl<T> Grid<T> {
     #[inline]
+    pub fn new(width: i32, height: i32) -> Self {
+        Grid {
+            width,
+            height,
+            bytes: Vec::with_capacity((width * height) as usize),
+        }
+    }
+
+    #[inline]
     pub fn contains(&self, point: Point) -> bool {
         point.x >= 0 && point.y >= 0 && point.x < self.width && point.y < self.height
     }
