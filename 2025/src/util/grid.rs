@@ -1,7 +1,10 @@
 use crate::util::point::*;
 
 use core::str;
-use std::ops::{Index, IndexMut};
+use std::{
+    fmt::Display,
+    ops::{Index, IndexMut},
+};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Grid<T> {
@@ -24,11 +27,24 @@ impl Grid<u8> {
         }
     }
 
-    pub fn print(&self) {
+    pub fn print_chars(&self) {
         for y in 0..self.height {
             for x in 0..self.width {
                 let point = Point::new(x, y);
                 print!("{}", self[point] as char);
+            }
+            println!();
+        }
+        println!();
+    }
+}
+
+impl<T: Display> Grid<T> {
+    pub fn print(&self) {
+        for y in 0..self.height {
+            for x in 0..self.width {
+                let point = Point::new(x, y);
+                print!(" {} ", self[point]);
             }
             println!();
         }
